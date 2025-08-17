@@ -33,4 +33,12 @@ public class Url {
 
     public void setExpirationDate(LocalDateTime localDateTime) {
     }
+
+    public LocalDateTime getExpirationDate() {
+        return expirationDate;
+    }
+
+    public String getOrinalUrl() {
+        return originalUrl;
+    }
 }
