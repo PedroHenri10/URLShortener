@@ -24,4 +24,13 @@ public class Url {
 
     private LocalDateTime expirationDate;
 
+    public void setOriginalUrl(String shortUrl) {
+
+    }
+
+    public void setShortUrl(String shortUrl) {
+    }
+
+    public void setExpirationDate(LocalDateTime localDateTime) {
+    }
 }
