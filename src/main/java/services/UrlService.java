@@ -1,6 +1,9 @@
 package services;
 
+import exceptions.InvalidUrlException;
+import exceptions.UrlNotFoundException;
 import model.Url;
+import org.apache.commons.validator.routines.UrlValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.UrlRepository;
@@ -15,38 +18,41 @@ public class UrlService {
     @Autowired
     private UrlRepository urlRepository;
 
-    public String shorterUrl(String originalUrl){
+    public Url shorterUrl(String originalUrl) {
+        if (originalUrl == null || originalUrl.isEmpty()) {
+            throw new InvalidUrlException("URL cannot be empty.");
+        }
+        UrlValidator urlValidator = new UrlValidator(new String[]{"http", "https"});
+        if (!urlValidator.isValid(originalUrl)) {
+            throw new InvalidUrlException("The provided URL is not valid.");
+        }
 
         String shortUrl = generateShortUrl();
         Url url = new Url();
         url.setOriginalUrl(originalUrl);
         url.setShortUrl(shortUrl);
         url.setExpirationDate(LocalDateTime.now().plusDays(30));
-        urlRepository.save(url);
-        return shortUrl;
+        return urlRepository.save(url);
     }
 
-    public Optional<Url> getOriginalUrl(String shortUrl){
-        Optional<Url> urlOptional = urlRepository.findByShortUrl(shortUrl);
-        if (urlOptional.isPresent()){
-            Url url = urlOptional.get();
-            if (url.getExpirationDate().isAfter(LocalDateTime.now())){
-                return Optional.of(url);
-            }
-            else{
-                urlRepository.delete(url);
-            }
+    public Url getOriginalUrl(String shortUrl) {
+        Url url = urlRepository.findByShortUrl(shortUrl)
+                .orElseThrow(() -> new UrlNotFoundException("Short URL not found: " + shortUrl));
+
+        if (url.getExpirationDate().isBefore(LocalDateTime.now())) {
+            urlRepository.delete(url);
+            throw new UrlNotFoundException("URL has expired and was deleted.");
         }
-        return Optional.empty();
+        return url;
     }
 
-    private String generateShortUrl(){
-        String characteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    private String generateShortUrl() {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         StringBuilder shortUrl = new StringBuilder();
         Random random = new Random();
-        int length = 5 + random.nextInt(6);
-        for(int i =0; i < length; i++){
-            shortUrl.append(characteres.charAt(random.nextInt(characteres.length())));
+        int length = 7;
+        for (int i = 0; i < length; i++) {
+            shortUrl.append(characters.charAt(random.nextInt(characters.length())));
         }
         return shortUrl.toString();
     }

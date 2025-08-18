@@ -7,38 +7,28 @@ import org.springframework.web.bind.annotation.*;
 import services.UrlService;
 
 import java.net.URI;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/url")
+@RequestMapping("/")
 public class UrlController {
 
     @Autowired
     private UrlService urlService;
 
     @PostMapping("/shorten")
-    public ResponseEntity<Map<String, String>> shortenUrl(@RequestBody Map<String, String> request){
-        String originalUrl =request.get("url");
-        String shortUrl = urlService.shorterUrl(originalUrl);
-        Map<String, String> response = new HashMap<String, String>();
-        response.put("url", "https://xxx.com/"+shortUrl);
+    public ResponseEntity<Map<String, String>> shortenUrl(@RequestBody Map<String, String> request) {
+        String originalUrl = request.get("url");
+        Url savedUrl = urlService.shorterUrl(originalUrl);
 
-        return ResponseEntity.ok(response);
+        String responseUrl = "http://localhost:8080/" + savedUrl.getShortUrl();
+
+        return ResponseEntity.ok(Map.of("shortUrl", responseUrl));
     }
 
     @GetMapping("/{shortUrl}")
-    public ResponseEntity<Object> redirectToOriginalUrl(@PathVariable String shortUrl){
-
-        Optional<Url> urlOptional = urlService.getOriginalUrl(shortUrl);
-        if(urlOptional.isPresent()){
-            Url url = urlOptional.get();
-            System.out.println("Redirecionando para: "+url.getOrinalUrl());
-            return ResponseEntity.status(302).location(URI.create(url.getOrinalUrl())).build();
-        }
-        System.out.println("URL não encontrada ou expirada: "+shortUrl);
-
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<Void> redirectToOriginalUrl(@PathVariable String shortUrl) {
+        Url url = urlService.getOriginalUrl(shortUrl);
+        return ResponseEntity.status(302).location(URI.create(url.getOriginalUrl())).build();
     }
 }
