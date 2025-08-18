@@ -1,22 +1,21 @@
 package model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import lombok.Setter;
+import lombok.Getter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Entity
+@Document(collection ="urls")
 @Getter
 @Setter
 public class Url {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     private String originalUrl;
 
@@ -24,7 +23,7 @@ public class Url {
 
     private LocalDateTime expirationDate;
 
-    public void setOriginalUrl(String shortUrl) {
+    /*public void setOriginalUrl(String shortUrl) {
 
     }
 
@@ -40,5 +39,5 @@ public class Url {
 
     public String getOrinalUrl() {
         return originalUrl;
-    }
+    }*/
 }
