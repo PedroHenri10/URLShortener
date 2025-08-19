@@ -1,12 +1,12 @@
-package services;
+package com.shortener.URL.services;
 
-import exceptions.InvalidUrlException;
-import exceptions.UrlNotFoundException;
-import model.Url;
+import com.shortener.URL.exceptions.InvalidUrlException;
+import com.shortener.URL.exceptions.UrlNotFoundException;
+import com.shortener.URL.model.Url;
 import org.apache.commons.validator.routines.UrlValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repository.UrlRepository;
+import com.shortener.URL.repository.UrlRepository;
 
 import java.time.LocalDateTime;
 import java.util.Optional;

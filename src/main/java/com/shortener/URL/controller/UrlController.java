@@ -1,10 +1,10 @@
-package controller;
+package com.shortener.URL.controller;
 
-import model.Url;
+import com.shortener.URL.model.Url;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import services.UrlService;
+import com.shortener.URL.services.UrlService;
 
 import java.net.URI;
 import java.util.Map;

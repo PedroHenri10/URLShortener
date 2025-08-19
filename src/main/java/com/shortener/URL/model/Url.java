@@ -1,4 +1,4 @@
-package model;
+package com.shortener.URL.model;
 
 import lombok.Setter;
 import lombok.Getter;

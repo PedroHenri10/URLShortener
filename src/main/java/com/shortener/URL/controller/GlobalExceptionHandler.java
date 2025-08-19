@@ -1,7 +1,7 @@
-package controller;
+package com.shortener.URL.controller;
 
-import exceptions.InvalidUrlException;
-import exceptions.UrlNotFoundException;
+import com.shortener.URL.exceptions.InvalidUrlException;
+import com.shortener.URL.exceptions.UrlNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
