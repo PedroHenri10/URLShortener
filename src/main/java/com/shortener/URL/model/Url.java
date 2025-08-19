@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Document(collection ="urls")
@@ -21,7 +22,7 @@ public class Url {
 
     private String shortUrl;
 
-    private LocalDateTime expirationDate;
+    private Instant expirationDate;
 
     /*public void setOriginalUrl(String shortUrl) {
 
