@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encurtador de URL</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Encurtador de URL</h1>
+    <p>Cole uma URL longa para criar uma curta</p>
+
+    <div class="input-container">
+        <input type="text" id="urlInput" placeholder="https://exemplo-de-url-muito-longa.com/...">
+        <button id="shortenBtn">Encurtar</button>
+    </div>
+
+    <div id="result" class="result-container hidden">
+        <p>Sua URL curta:</p>
+        <div class="short-url-box">
+            <a href="" id="shortUrlLink" target="_blank"></a>
+            <button id="copyBtn">Copiar</button>
+        </div>
+        <div id="feedback" class="feedback-message"></div>
+    </div>
+
+    <div id="error" class="error-message hidden"></div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
