@@ -7,5 +7,39 @@ document.addEventListener('DOMContentLoaded', () => {
     const copyBtn = document.getElementById('copyBtn');
     const feedbackDiv = document.getElementById('feedback');
 
+    shortenBtn.addEventListener('click', async () => {
+        const originalUrl = urlInput.value.trim();
+
+        resultDiv.classList.add('hidden');
+        errorDiv.classList.add('hidden');
+        feedbackDiv.textContent = '';
+
+        if (!originalUrl) {
+            showError('Por favor, insira uma URL.');
+            return;
+        }
+
+        try {
+            const response = await fetch('/shorten', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ url: originalUrl }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Ocorreu um erro.');
+            }
+
+            showResult(data.shortUrl);
+
+        } catch (err) {
+            showError(err.message);
+        }
+    });
+
     
 });
