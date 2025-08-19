@@ -1,7 +1,6 @@
 package com.shortener.URL.repository;
 
 import com.shortener.URL.model.Url;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;

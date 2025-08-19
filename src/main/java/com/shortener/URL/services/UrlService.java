@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.shortener.URL.repository.UrlRepository;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.Random;
 
@@ -31,7 +33,7 @@ public class UrlService {
         Url url = new Url();
         url.setOriginalUrl(originalUrl);
         url.setShortUrl(shortUrl);
-        url.setExpirationDate(LocalDateTime.now().plusDays(30));
+        url.setExpirationDate(Instant.now().plus(30, ChronoUnit.DAYS));
         return urlRepository.save(url);
     }
 
@@ -39,7 +41,7 @@ public class UrlService {
         Url url = urlRepository.findByShortUrl(shortUrl)
                 .orElseThrow(() -> new UrlNotFoundException("Short URL not found: " + shortUrl));
 
-        if (url.getExpirationDate().isBefore(LocalDateTime.now())) {
+        if (url.getExpirationDate().isBefore(Instant.now())) {
             urlRepository.delete(url);
             throw new UrlNotFoundException("URL has expired and was deleted.");
         }
