@@ -52,5 +52,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     });
 
+    function showResult(url) {
+        shortUrlLink.href = url;
+        shortUrlLink.textContent = url;
+        resultDiv.classList.remove('hidden');
+    }
+
     
 });
