@@ -19,13 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        try {
-            const response = await fetch('/shorten', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ url: originalUrl }),
+            try {
+                 const response = await fetch('/api/shorten', {
+                 method: 'POST',
+                 headers: {
+                  'Content-Type': 'application/json',
+                 },
+                 body: JSON.stringify({ url: originalUrl }),
             });
 
             const data = await response.json();
