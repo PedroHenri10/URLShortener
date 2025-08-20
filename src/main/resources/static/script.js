@@ -41,5 +41,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(shortUrlLink.href)
+            .then(() => {
+                feedbackDiv.textContent = 'Copiado!';
+                setTimeout(() => feedbackDiv.textContent = '', 2000);
+            })
+            .catch(err => {
+                feedbackDiv.textContent = 'Falha ao copiar.';
+            });
+    });
+
     
 });
