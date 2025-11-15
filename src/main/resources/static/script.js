@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     shortenBtn.addEventListener('click', async () => {
         const originalUrl = urlInput.value.trim();
+        const expirationDays = document.querySelector('input[name="expiration"]:checked').value;
 
         resultDiv.classList.add('hidden');
         errorDiv.classList.add('hidden');
@@ -19,13 +20,14 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-            try {
-                 const response = await fetch('/api/shorten', {
-                 method: 'POST',
-                 headers: {
-                  'Content-Type': 'application/json',
-                 },
-                 body: JSON.stringify({ url: originalUrl }),
+        try {
+            const response = await fetch('/api/shorten', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    url: originalUrl,
+                    days: parseInt(expirationDays)
+                }),
             });
 
             const data = await response.json();
@@ -47,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 feedbackDiv.textContent = 'Copiado!';
                 setTimeout(() => feedbackDiv.textContent = '', 2000);
             })
-            .catch(err => {
+            .catch(() => {
                 feedbackDiv.textContent = 'Falha ao copiar.';
             });
     });
