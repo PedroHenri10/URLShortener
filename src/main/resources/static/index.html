@@ -13,8 +13,19 @@
 
     <div class="input-container">
         <input type="text" id="urlInput" placeholder="https://exemplo-de-url-muito-longa.com/...">
-        <button id="shortenBtn">Encurtar</button>
     </div>
+
+    <div class="expiration-options">
+        <label>Expira em:</label>
+        <div class="radio-group">
+            <label><input type="radio" name="expiration" value="30" checked> 30 dias</label>
+            <label><input type="radio" name="expiration" value="45"> 45 dias</label>
+            <label><input type="radio" name="expiration" value="60"> 60 dias</label>
+            <label><input type="radio" name="expiration" value="90"> 90 dias</label>
+        </div>
+    </div>
+
+    <button id="shortenBtn">Encurtar</button>
 
     <div id="result" class="result-container hidden">
         <p>Sua URL curta:</p>
