@@ -1,5 +1,6 @@
 package com.shortener.URL.services;
 
+import com.shortener.URL.dto.UrlRequest;
 import com.shortener.URL.exceptions.InvalidUrlException;
 import com.shortener.URL.exceptions.UrlNotFoundException;
 import com.shortener.URL.model.Url;
@@ -20,20 +21,23 @@ public class UrlService {
     @Autowired
     private UrlRepository urlRepository;
 
-    public Url shorterUrl(String originalUrl) {
-        if (originalUrl == null || originalUrl.isEmpty()) {
+    public Url shorterUrl(UrlRequest request) {
+
+        if (request.getUrl() == null || request.getUrl().isEmpty()) {
             throw new InvalidUrlException("URL cannot be empty.");
         }
         UrlValidator urlValidator = new UrlValidator(new String[]{"http", "https"});
-        if (!urlValidator.isValid(originalUrl)) {
+        if (!urlValidator.isValid(request.getUrl())) {
             throw new InvalidUrlException("The provided URL is not valid.");
         }
 
+        int days = request.getDays() > 0 ? request.getDays() : 30;
+
         String shortUrl = generateShortUrl();
         Url url = new Url();
-        url.setOriginalUrl(originalUrl);
+        url.setOriginalUrl(request.getUrl());
         url.setShortUrl(shortUrl);
-        url.setExpirationDate(Instant.now().plus(30, ChronoUnit.DAYS));
+        url.setExpirationDate(Instant.now().plus(days, ChronoUnit.DAYS));
         return urlRepository.save(url);
     }
 
