@@ -25,12 +25,13 @@ h1 {
 
 p {
     color: #666;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .input-container {
     display: flex;
     gap: 10px;
+    margin-bottom: 20px;
 }
 
 #urlInput {
@@ -39,6 +40,35 @@ p {
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
+}
+
+.expiration-options {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.radio-group label {
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.radio-group input {
+    margin-right: 5px;
+}
+
+.radio-group label:hover {
+    background-color: #dbe3eb;
 }
 
 #shortenBtn {
@@ -50,11 +80,13 @@ p {
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
+    width: 100%;
 }
 
 #shortenBtn:hover {
     background-color: #0056b3;
 }
+
 .result-container {
     margin-top: 30px;
 }
