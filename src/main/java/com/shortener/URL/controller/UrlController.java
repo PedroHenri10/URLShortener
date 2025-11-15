@@ -1,5 +1,6 @@
 package com.shortener.URL.controller;
 
+import com.shortener.URL.dto.UrlRequest;
 import com.shortener.URL.model.Url;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import com.shortener.URL.services.UrlService;
 
 import java.net.URI;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Map;
 
 @Controller
@@ -23,9 +26,9 @@ public class UrlController {
 
     @PostMapping("/api/shorten")
     @ResponseBody
-    public ResponseEntity<Map<String, String>> shortenUrl(@RequestBody Map<String, String> request) {
-        String originalUrl = request.get("url");
-        Url savedUrl = urlService.shorterUrl(originalUrl);
+    public ResponseEntity<Map<String, String>> shortenUrl(@RequestBody UrlRequest request) {
+
+        Url savedUrl = urlService.shorterUrl(request);
 
         String responseUrl = "http://localhost:8080/r/" + savedUrl.getShortUrl();
 
